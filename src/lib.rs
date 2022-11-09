@@ -13,10 +13,14 @@ pub mod common;
 pub mod vertex_data;
 // const IS_PERSPECTIVE:bool = false;
 
+const ROTATION_SPEED: f32 = 1.0;
+
 struct State {
     init: common::InitWgpu, 
     pipeline: wgpu::RenderPipeline, 
     vertex_buffer: wgpu::Buffer, 
+    index_buffer: wgpu::Buffer,
+    indices_len: u32,
     uniform_buffer: wgpu::Buffer, 
     uniform_bind_group:wgpu::BindGroup, 
     model_mat: Matrix4<f32>,
@@ -32,8 +36,8 @@ impl State {
             source: wgpu::ShaderSource::Wgsl(include_str!("./shader/cube.wgsl").into()),   
         });
 
-        // some uniform data
-        let camera_position = (1.5, 1.0, 3.0).into(); 
+        // init mvp matrix
+        let camera_position = (0.0, 0.0, 4.5).into(); 
         let look_direction = (0.0,0.0,0.0).into(); 
         let up_direction = cgmath::Vector3::unit_y();
 
@@ -44,9 +48,11 @@ impl State {
                                             look_direction, 
                                             up_direction,
                                     init.config.width as f32 / init.config.height as f32, 
-                            false); 
+                            true); 
         let mvp_mat = view_project_mat * model_mat;
         let mvp_ref:&[f32; 16] = mvp_mat.as_ref();
+        
+        // pass mvp to uniform buffer
         let uniform_buffer = init.device.create_buffer_init(&wgpu::util::BufferInitDescriptor {
             label: Some("Uniform Buffer"),
             contents: bytemuck::cast_slice(mvp_ref),
@@ -105,7 +111,8 @@ impl State {
             }),
             primitive: wgpu::PrimitiveState{
                 topology: wgpu::PrimitiveTopology::TriangleList,
-                 strip_index_format: None,
+                strip_index_format: None,
+                cull_mode: Some(wgpu::Face::Back),
                 ..Default::default()
             },
             depth_stencil: Some(wgpu::DepthStencilState {
@@ -119,16 +126,27 @@ impl State {
             multiview: None,
         });
 
+        let (vertices, indices) = vertex_data::create_cube_vertices_with_indices();
         let vertex_buffer = init.device.create_buffer_init(&wgpu::util::BufferInitDescriptor { 
             label: Some("Vertex Buffer"),
-            contents: cast_slice(&vertex_data::create_cube_vertices()),
+            contents: cast_slice(&vertices),
             usage: wgpu::BufferUsages::VERTEX,
         });
+
+        let index_buffer = init.device.create_buffer_init(&wgpu::util::BufferInitDescriptor{
+            label: Some("Indices Buffer"),
+            contents: cast_slice(&indices),
+            usage: wgpu::BufferUsages::INDEX, 
+        });
+
+        let indices_len = indices.len() as u32;
 
         Self{
             init,
             pipeline, 
             vertex_buffer, 
+            index_buffer,
+            indices_len,
             uniform_buffer, 
             uniform_bind_group, 
             model_mat, 
@@ -151,7 +169,13 @@ impl State {
         false
     }
 
-    fn update(&mut self) {}
+    fn update(&mut self, dt: std::time::Duration) {
+        let dt = ROTATION_SPEED * dt.as_secs_f32(); 
+        let model_mat = common::create_transforms([0.0,0.0,0.0], [dt.sin(), dt.cos(), 0.0], [1.0, 1.0, 1.0]);
+        let mvp_mat = self.project_mat * self.view_mat * model_mat;        
+        let mvp_ref:&[f32; 16] = mvp_mat.as_ref();
+        self.init.queue.write_buffer(&self.uniform_buffer, 0, bytemuck::cast_slice(mvp_ref))
+    }
     
     fn render(&mut self) -> Result<(), wgpu::SurfaceError> {
         //let output = self.init.surface.get_current_frame()?.output;
@@ -189,9 +213,9 @@ impl State {
                     resolve_target: None,
                     ops: wgpu::Operations {
                         load: wgpu::LoadOp::Clear(wgpu::Color {
-                            r: 0.2,
-                            g: 0.247,
-                            b: 0.314,
+                            r: 0.5,
+                            g: 0.5,
+                            b: 0.5,
                             a: 1.0,
                         }),
                         store: true,
@@ -209,8 +233,9 @@ impl State {
 
             render_pass.set_pipeline(&self.pipeline);
             render_pass.set_vertex_buffer(0, self.vertex_buffer.slice(..));
+            render_pass.set_index_buffer(self.index_buffer.slice(..), wgpu::IndexFormat::Uint16);
             render_pass.set_bind_group(0, &self.uniform_bind_group, &[]);
-            render_pass.draw(0..36, 0..1);
+            render_pass.draw_indexed(0..self.indices_len, 0, 0..1);
         }
 
         self.init.queue.submit(iter::once(encoder.finish()));
@@ -225,8 +250,9 @@ pub async fn run(){
     env_logger::init();
     let event_loop = EventLoop::new();
     let window = WindowBuilder::new().build(&event_loop).unwrap();
-    window.set_title(&*format!("{}", "ch06-3d-line"));
+    window.set_title(&*format!("{}", "webgpu_rust"));
     let mut state = pollster::block_on(State::new(&window));
+    let render_start_time = std::time::Instant::now();
 
     event_loop.run(move |event, _, control_flow| {
         match event {
@@ -257,7 +283,9 @@ pub async fn run(){
                 }
             }
             Event::RedrawRequested(_) => {
-                state.update();
+                let now = std::time::Instant::now();
+                let dt = now - render_start_time;
+                state.update(dt);
                 match state.render() {
                     Ok(_) => {}
                     Err(wgpu::SurfaceError::Lost) => state.resize(state.init.size),

@@ -84,7 +84,7 @@ pub fn create_perspective_projection(fovy:Rad<f32>, aspect:f32, near: f32, far:f
     OPENGL_TO_WGPU_MATRIX * perspective(fovy, aspect, near, far)
 }
 
-pub fn create_projection_ortho(left: f32, right: f32, bottom: f32, top: f32, near: f32, far: f32) -> Matrix4<f32> {
+pub fn create_ortho_perspective(left: f32, right: f32, bottom: f32, top: f32, near: f32, far: f32) -> Matrix4<f32> {
     OPENGL_TO_WGPU_MATRIX * ortho(left, right, bottom, top, near, far)    
 }
 
@@ -113,7 +113,7 @@ pub fn create_view_projection(camera_position: Point3<f32>, look_direction: Poin
     // construct projection matrix
     let project_mat:Matrix4<f32>;
     if is_perspective {
-        project_mat = OPENGL_TO_WGPU_MATRIX * perspective(Rad(2.0*PI/5.0), aspect, 0.1, 100.0);
+        project_mat = OPENGL_TO_WGPU_MATRIX * perspective(Rad(2.0*PI/5.0), aspect, 1.0, 100.0);
     } else {
         project_mat = OPENGL_TO_WGPU_MATRIX * ortho(-4.0, 4.0, -3.0, 3.0, -1.0, 6.0);
     }
