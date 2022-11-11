@@ -1,5 +1,5 @@
 struct Uniforms {
-    mvpMatrix : mat4x4<f32>,
+    mvpMatrix:  array<mat4x4<f32>, 16>,
 };
 
 @binding(0) @group(0) var<uniform> uniforms : Uniforms;
@@ -10,9 +10,10 @@ struct Output {
 };
 
 @vertex
-fn vs_main(@location(0) pos: vec4<f32>, @location(1) color: vec4<f32>) -> Output {
+fn vs_main(@builtin(instance_index) instanceIdx : u32,
+@location(0) pos: vec4<f32>, @location(1) color: vec4<f32>) -> Output {
     var output: Output;
-    output.Position = uniforms.mvpMatrix * pos;
+    output.Position = uniforms.mvpMatrix[instanceIdx] * pos;
     output.vColor = color;
     return output;
 }

@@ -14,6 +14,9 @@ pub mod vertex_data;
 // const IS_PERSPECTIVE:bool = false;
 
 const ROTATION_SPEED: f32 = 1.0;
+const NX: usize = 4;
+const NY: usize = 4;
+const NXY: usize = 16;
 
 struct State {
     init: common::InitWgpu, 
@@ -49,15 +52,25 @@ impl State {
                                             up_direction,
                                     init.config.width as f32 / init.config.height as f32, 
                             true); 
-        let mvp_mat = view_project_mat * model_mat;
-        let mvp_ref:&[f32; 16] = mvp_mat.as_ref();
         
+        let matrix_size = 16 * 4;
+        let uniform_buffer_size = NXY as u64 * matrix_size;
+
         // pass mvp to uniform buffer
-        let uniform_buffer = init.device.create_buffer_init(&wgpu::util::BufferInitDescriptor {
+        let uniform_buffer = init.device.create_buffer(&wgpu::BufferDescriptor{ 
             label: Some("Uniform Buffer"),
-            contents: bytemuck::cast_slice(mvp_ref),
-            usage: wgpu::BufferUsages::UNIFORM | wgpu::BufferUsages::COPY_DST,
+            size: uniform_buffer_size,
+            usage: wgpu::BufferUsages::UNIFORM | wgpu::BufferUsages::COPY_DST, mapped_at_creation: false,
         });
+
+        // let mvp_mat = view_project_mat * model_mat;
+        // let mvp_ref:&[f32; 16] = mvp_mat.as_ref();
+        
+        // let uniform_buffer = init.device.create_buffer_init(&wgpu::util::BufferInitDescriptor {
+        //     label: Some("Uniform Buffer"),
+        //     contents: bytemuck::cast_slice(mvp_ref),
+        //     usage: wgpu::BufferUsages::UNIFORM | wgpu::BufferUsages::COPY_DST,
+        // });
 
         let uniform_bind_group_layout = init.device.create_bind_group_layout(&wgpu::BindGroupLayoutDescriptor{ 
             entries: &[
@@ -171,10 +184,23 @@ impl State {
 
     fn update(&mut self, dt: std::time::Duration) {
         let dt = ROTATION_SPEED * dt.as_secs_f32(); 
-        let model_mat = common::create_transforms([0.0,0.0,0.0], [dt.sin(), dt.cos(), 0.0], [1.0, 1.0, 1.0]);
-        let mvp_mat = self.project_mat * self.view_mat * model_mat;        
-        let mvp_ref:&[f32; 16] = mvp_mat.as_ref();
-        self.init.queue.write_buffer(&self.uniform_buffer, 0, bytemuck::cast_slice(mvp_ref))
+        
+        let mut mvp_mat:Vec<[f32;16]> = Vec::with_capacity(NXY as usize);
+
+        for x in 0..NX {
+            for y in 0..NY {
+                let xx = 1.5 * (x as f32 - NX as f32/2.0 + 0.5); 
+                let yy = 1.5 * (y as f32 - NY as f32/2.0 + 0.5); 
+                let tx = dt * (x as f32 + 0.5);
+                let ty = dt * (y as f32 + 0.5);
+                let model_mat = common::create_transforms(
+                    [xx,yy,0.0], [tx.sin(), ty.cos(), 0.0], [0.3, 0.3, 0.3]);
+                let mvp = self.project_mat * self.view_mat * model_mat; let mvp1:&[f32;16] = mvp.as_ref();
+                mvp_mat.push(*mvp1);
+            }
+        }
+        let mvp_ref:&[[f32; 16]; NXY] = mvp_mat[..].try_into().unwrap();
+        self.init.queue.write_buffer(&self.uniform_buffer, 0, bytemuck::cast_slice(mvp_ref));
     }
     
     fn render(&mut self) -> Result<(), wgpu::SurfaceError> {
@@ -213,9 +239,9 @@ impl State {
                     resolve_target: None,
                     ops: wgpu::Operations {
                         load: wgpu::LoadOp::Clear(wgpu::Color {
-                            r: 0.5,
-                            g: 0.5,
-                            b: 0.5,
+                            r: 0.1,
+                            g: 0.1,
+                            b: 0.1,
                             a: 1.0,
                         }),
                         store: true,
@@ -235,7 +261,7 @@ impl State {
             render_pass.set_vertex_buffer(0, self.vertex_buffer.slice(..));
             render_pass.set_index_buffer(self.index_buffer.slice(..), wgpu::IndexFormat::Uint16);
             render_pass.set_bind_group(0, &self.uniform_bind_group, &[]);
-            render_pass.draw_indexed(0..self.indices_len, 0, 0..1);
+            render_pass.draw_indexed(0..self.indices_len, 0, 0..NXY as u32);
         }
 
         self.init.queue.submit(iter::once(encoder.finish()));
