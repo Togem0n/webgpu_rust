@@ -7,5 +7,5 @@ Cargo run
 
 Or check the short result as below
 
-![Boid](https://github.com/Togem0n/webgpu_rust/webgpu-rust.gif)
+![Boid](https://github.com/Togem0n/webgpu_rust/blob/main/webgpu-rust.gif)
 
