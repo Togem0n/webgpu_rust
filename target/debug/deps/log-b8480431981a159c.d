@@ -1,0 +1,7 @@
+/Users/kai/Desktop/LearnRust/webgpu_example/webgpu_rust/target/debug/deps/log-b8480431981a159c.rmeta: /Users/kai/.cargo/registry/src/github.com-1ecc6299db9ec823/log-0.4.17/src/lib.rs /Users/kai/.cargo/registry/src/github.com-1ecc6299db9ec823/log-0.4.17/src/macros.rs /Users/kai/.cargo/registry/src/github.com-1ecc6299db9ec823/log-0.4.17/src/serde.rs
+
+/Users/kai/Desktop/LearnRust/webgpu_example/webgpu_rust/target/debug/deps/log-b8480431981a159c.d: /Users/kai/.cargo/registry/src/github.com-1ecc6299db9ec823/log-0.4.17/src/lib.rs /Users/kai/.cargo/registry/src/github.com-1ecc6299db9ec823/log-0.4.17/src/macros.rs /Users/kai/.cargo/registry/src/github.com-1ecc6299db9ec823/log-0.4.17/src/serde.rs
+
+/Users/kai/.cargo/registry/src/github.com-1ecc6299db9ec823/log-0.4.17/src/lib.rs:
+/Users/kai/.cargo/registry/src/github.com-1ecc6299db9ec823/log-0.4.17/src/macros.rs:
+/Users/kai/.cargo/registry/src/github.com-1ecc6299db9ec823/log-0.4.17/src/serde.rs:

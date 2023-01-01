@@ -1,0 +1,14 @@
+/Users/kai/Desktop/LearnRust/webgpu_example/webgpu_rust/target/debug/deps/wgpu-09299c6b7e7fbd00.rmeta: /Users/kai/.cargo/registry/src/github.com-1ecc6299db9ec823/wgpu-0.14.0/src/lib.rs /Users/kai/.cargo/registry/src/github.com-1ecc6299db9ec823/wgpu-0.14.0/src/backend/mod.rs /Users/kai/.cargo/registry/src/github.com-1ecc6299db9ec823/wgpu-0.14.0/src/backend/direct.rs /Users/kai/.cargo/registry/src/github.com-1ecc6299db9ec823/wgpu-0.14.0/src/util/mod.rs /Users/kai/.cargo/registry/src/github.com-1ecc6299db9ec823/wgpu-0.14.0/src/util/belt.rs /Users/kai/.cargo/registry/src/github.com-1ecc6299db9ec823/wgpu-0.14.0/src/util/device.rs /Users/kai/.cargo/registry/src/github.com-1ecc6299db9ec823/wgpu-0.14.0/src/util/encoder.rs /Users/kai/.cargo/registry/src/github.com-1ecc6299db9ec823/wgpu-0.14.0/src/util/indirect.rs /Users/kai/.cargo/registry/src/github.com-1ecc6299db9ec823/wgpu-0.14.0/src/util/init.rs /Users/kai/.cargo/registry/src/github.com-1ecc6299db9ec823/wgpu-0.14.0/src/macros.rs
+
+/Users/kai/Desktop/LearnRust/webgpu_example/webgpu_rust/target/debug/deps/wgpu-09299c6b7e7fbd00.d: /Users/kai/.cargo/registry/src/github.com-1ecc6299db9ec823/wgpu-0.14.0/src/lib.rs /Users/kai/.cargo/registry/src/github.com-1ecc6299db9ec823/wgpu-0.14.0/src/backend/mod.rs /Users/kai/.cargo/registry/src/github.com-1ecc6299db9ec823/wgpu-0.14.0/src/backend/direct.rs /Users/kai/.cargo/registry/src/github.com-1ecc6299db9ec823/wgpu-0.14.0/src/util/mod.rs /Users/kai/.cargo/registry/src/github.com-1ecc6299db9ec823/wgpu-0.14.0/src/util/belt.rs /Users/kai/.cargo/registry/src/github.com-1ecc6299db9ec823/wgpu-0.14.0/src/util/device.rs /Users/kai/.cargo/registry/src/github.com-1ecc6299db9ec823/wgpu-0.14.0/src/util/encoder.rs /Users/kai/.cargo/registry/src/github.com-1ecc6299db9ec823/wgpu-0.14.0/src/util/indirect.rs /Users/kai/.cargo/registry/src/github.com-1ecc6299db9ec823/wgpu-0.14.0/src/util/init.rs /Users/kai/.cargo/registry/src/github.com-1ecc6299db9ec823/wgpu-0.14.0/src/macros.rs
+
+/Users/kai/.cargo/registry/src/github.com-1ecc6299db9ec823/wgpu-0.14.0/src/lib.rs:
+/Users/kai/.cargo/registry/src/github.com-1ecc6299db9ec823/wgpu-0.14.0/src/backend/mod.rs:
+/Users/kai/.cargo/registry/src/github.com-1ecc6299db9ec823/wgpu-0.14.0/src/backend/direct.rs:
+/Users/kai/.cargo/registry/src/github.com-1ecc6299db9ec823/wgpu-0.14.0/src/util/mod.rs:
+/Users/kai/.cargo/registry/src/github.com-1ecc6299db9ec823/wgpu-0.14.0/src/util/belt.rs:
+/Users/kai/.cargo/registry/src/github.com-1ecc6299db9ec823/wgpu-0.14.0/src/util/device.rs:
+/Users/kai/.cargo/registry/src/github.com-1ecc6299db9ec823/wgpu-0.14.0/src/util/encoder.rs:
+/Users/kai/.cargo/registry/src/github.com-1ecc6299db9ec823/wgpu-0.14.0/src/util/indirect.rs:
+/Users/kai/.cargo/registry/src/github.com-1ecc6299db9ec823/wgpu-0.14.0/src/util/init.rs:
+/Users/kai/.cargo/registry/src/github.com-1ecc6299db9ec823/wgpu-0.14.0/src/macros.rs:

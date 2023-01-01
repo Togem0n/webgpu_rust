@@ -1,0 +1,11 @@
+/Users/kai/Desktop/LearnRust/webgpu_example/webgpu_rust/target/debug/deps/futures_task-312d314effa3b33b.rmeta: /Users/kai/.cargo/registry/src/github.com-1ecc6299db9ec823/futures-task-0.3.25/src/lib.rs /Users/kai/.cargo/registry/src/github.com-1ecc6299db9ec823/futures-task-0.3.25/src/spawn.rs /Users/kai/.cargo/registry/src/github.com-1ecc6299db9ec823/futures-task-0.3.25/src/arc_wake.rs /Users/kai/.cargo/registry/src/github.com-1ecc6299db9ec823/futures-task-0.3.25/src/waker.rs /Users/kai/.cargo/registry/src/github.com-1ecc6299db9ec823/futures-task-0.3.25/src/waker_ref.rs /Users/kai/.cargo/registry/src/github.com-1ecc6299db9ec823/futures-task-0.3.25/src/future_obj.rs /Users/kai/.cargo/registry/src/github.com-1ecc6299db9ec823/futures-task-0.3.25/src/noop_waker.rs
+
+/Users/kai/Desktop/LearnRust/webgpu_example/webgpu_rust/target/debug/deps/futures_task-312d314effa3b33b.d: /Users/kai/.cargo/registry/src/github.com-1ecc6299db9ec823/futures-task-0.3.25/src/lib.rs /Users/kai/.cargo/registry/src/github.com-1ecc6299db9ec823/futures-task-0.3.25/src/spawn.rs /Users/kai/.cargo/registry/src/github.com-1ecc6299db9ec823/futures-task-0.3.25/src/arc_wake.rs /Users/kai/.cargo/registry/src/github.com-1ecc6299db9ec823/futures-task-0.3.25/src/waker.rs /Users/kai/.cargo/registry/src/github.com-1ecc6299db9ec823/futures-task-0.3.25/src/waker_ref.rs /Users/kai/.cargo/registry/src/github.com-1ecc6299db9ec823/futures-task-0.3.25/src/future_obj.rs /Users/kai/.cargo/registry/src/github.com-1ecc6299db9ec823/futures-task-0.3.25/src/noop_waker.rs
+
+/Users/kai/.cargo/registry/src/github.com-1ecc6299db9ec823/futures-task-0.3.25/src/lib.rs:
+/Users/kai/.cargo/registry/src/github.com-1ecc6299db9ec823/futures-task-0.3.25/src/spawn.rs:
+/Users/kai/.cargo/registry/src/github.com-1ecc6299db9ec823/futures-task-0.3.25/src/arc_wake.rs:
+/Users/kai/.cargo/registry/src/github.com-1ecc6299db9ec823/futures-task-0.3.25/src/waker.rs:
+/Users/kai/.cargo/registry/src/github.com-1ecc6299db9ec823/futures-task-0.3.25/src/waker_ref.rs:
+/Users/kai/.cargo/registry/src/github.com-1ecc6299db9ec823/futures-task-0.3.25/src/future_obj.rs:
+/Users/kai/.cargo/registry/src/github.com-1ecc6299db9ec823/futures-task-0.3.25/src/noop_waker.rs:
